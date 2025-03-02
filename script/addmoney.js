@@ -39,22 +39,36 @@ newElm.innerHTML = `<div class="border border-gray-200 p-2 rounded"> <div class=
 transHistory.append(newElm);
 }
 
+const showAddTotal = ()=>{
+    return JSON.parse(localStorage.getItem("addTotal"));
+}
+
+
+let addTotalAmount = showAddTotal() ;
 
 const addAmount = (amounts)=>{
     const getAmount = parseInt(amount.innerText);
     const totalAmount = getAmount + amounts ;
     amount.innerText = totalAmount ;
-    console.log(totalAmount);
     amountToAdd.value = "";
     pin.value = "";
+    localStorage.setItem("addTotal", JSON.stringify(totalAmount));
 }
+amount.innerText = addTotalAmount;
+
+
 const outAmount = (amounts)=>{
     const getAmount = parseInt(amount.innerText);
     const totalAmount = getAmount - amounts ;
     amount.innerText = totalAmount ;
     amountToWithdraw.value = "";
     pin2.value = "";
+   
 }
+
+
+
+
 
 
 addMoneyBtn.addEventListener("click",(e)=>{
@@ -85,7 +99,7 @@ cashOutBtn.addEventListener("click",(e)=>{
     const cashout = "Cashout";
     const getAmount = parseFloat(amount.innerText);
 
-    console.log(getAmount);
+    // console.log(getAmount);
 
     if(pin2.value === "1234"){
         if(amountToWithdraw.value < getAmount){
