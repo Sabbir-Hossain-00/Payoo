@@ -19,11 +19,26 @@ const transaction = document.getElementById("transaction");
 const transactionBtn = document.getElementById("transaction-btn");
 
 
+const showTransection = ()=>{
+   return JSON.parse(localStorage.getItem("historyOfTransection"))
+}
+
+
+const historyArr = showTransection() || [];
 const transactionHistory = (method , amount)=>{
     const newElm = document.createElement("div");
     newElm.innerHTML = `<div class="border border-gray-200 p-2 rounded"> <div class="li-left flex justify-start items-center gap-4"> <img src="assets/money1.png" alt=""> <div> <h1>${method}</h1> <span>${amount}</span> </div> </div> </div>`;
     transHistory.append(newElm);
+    historyArr.push(newElm.innerText);
+    localStorage.setItem("historyOfTransection", JSON.stringify(historyArr));
+   
 }
+for(let arr of historyArr){
+const newElm = document.createElement("div");
+newElm.innerHTML = `<div class="border border-gray-200 p-2 rounded"> <div class="li-left flex justify-start items-center gap-4"> <img src="assets/money1.png" alt=""> <div><span>${arr}</span> </div> </div> </div>`;
+transHistory.append(newElm);
+}
+
 
 const addAmount = (amounts)=>{
     const getAmount = parseInt(amount.innerText);
@@ -45,7 +60,6 @@ const outAmount = (amounts)=>{
 addMoneyBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     const addMoney = "Add Money";
-    console.log(accountNumber.value.length);
    if(pin.value === "1234"){
     if(accountNumber.value.length === 11){
         if(amountToAdd.value > 0){
@@ -118,3 +132,5 @@ transactionBtn.addEventListener("click",()=>{
 document.getElementById("logout").addEventListener("click",()=>{
     window.location.href = "index.html"
 });
+
+
