@@ -44,7 +44,7 @@ const showAddTotal = ()=>{
 }
 
 
-let addTotalAmount = showAddTotal() ;
+let addTotalAmount = showAddTotal() || 500;
 
 const addAmount = (amounts)=>{
     const getAmount = parseInt(amount.innerText);
