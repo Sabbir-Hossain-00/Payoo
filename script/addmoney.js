@@ -26,14 +26,14 @@ const showTransection = ()=>{
 let historyArr = showTransection() || [];
 const time = new Date().toLocaleTimeString();
 const date = new Date().toDateString();
-const transactionHistory = (method , amount)=>{
+const transactionHistory = (method , amount , fromTo , toFrom)=>{
     const bank = document.getElementById("bank").value;
     const newElm = document.createElement("div");
     newElm.innerHTML = `
     <div>
     <div class = "border border-gray-600 p-2 rounded-lg flex justify-center items-center gap-2 ">
      <img src="assets/money1.png" alt="">
-     <p>${method} ${amount} from ${bank} to 01319556163 at ${time} on ${date}</p>
+     <p>${method} ${amount}$ ${fromTo} ${bank} ${toFrom} 01319556163 at ${time} on ${date}</p>
     </div>
     </div>
     
@@ -103,12 +103,14 @@ amount.innerText = localAmount ;
 addMoneyBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     const addMoney = "Money added ";
+    const from = "from";
+    const to = "to"
    if(pin.value === "1234"){
     if(accountNumber.value.length === 11){
         if(amountToAdd.value > 0){
             const getAmountToAdd = parseInt(amountToAdd.value);
             addAmount(getAmountToAdd);
-            transactionHistory(addMoney, getAmountToAdd);
+            transactionHistory(addMoney, getAmountToAdd,from , to);
             showLocalTotal(amount);
             accountNumber.value = "";
         }else{
@@ -127,6 +129,8 @@ addMoneyBtn.addEventListener("click",(e)=>{
 cashOutBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     const cashout = "Cashout";
+    const to = "to";
+    const from = "from"
     const getAmount = parseFloat(amount.innerText);
 
     // console.log(getAmount);
@@ -135,7 +139,7 @@ cashOutBtn.addEventListener("click",(e)=>{
         if(amountToWithdraw.value < getAmount){
             const getAmountToWithdraw = parseInt(amountToWithdraw.value);
             outAmount(getAmountToWithdraw);
-            transactionHistory(cashout , getAmountToWithdraw);
+            transactionHistory(cashout , getAmountToWithdraw , to , from);
             showLocalTotal(amount);
             accountNumber.value = "";
         }else{
