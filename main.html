@@ -18,7 +18,7 @@
                  </div>
                 <!-- amount -->
                  <div>
-                    <h1 class="font-bold text-3xl">$ <span id="amount">500</span></h1>
+                    <h1 class="font-bold text-3xl">$ <span id="amount">50000</span></h1>
                     <p>Available Blance</p>
                  </div>
              </div>
@@ -74,7 +74,7 @@
                 <form class="w-full bg-white shadow-md space-y-2 p-[32px] rounded-3xl">
 
                     <legend class="font-bold text-xl">Select A Bank</legend>
-                    <select  class="bg-[#F4F5F7] rounded-4xl w-full px-4 py-4">
+                    <select id="bank" class="bg-[#F4F5F7] rounded-4xl w-full px-4 py-4">
                         <option value="SIBL">SIBL</option>
                         <option value="Bkash">Bkash</option>
                         <option value="Nagad">Nagad</option>
@@ -118,7 +118,10 @@
             <!-- transactions history -->
 
             <section id="transaction" class="pb-10">
-                <h1 class="text-xl font-semibold mb-6">Transactions history</h1>
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-xl font-semibold">Transactions history</h1>
+                    <button id="clear-history" class="bg-red-800 text-white py-2 px-3 rounded-lg cursor-pointer text-xl">Clear History</button>
+                </div>
                 <div class="trans-history space-y-2">
 
                 </div>
@@ -126,6 +129,7 @@
             
         </main>
     </div>
+
    <script src="script/addmoney.js"></script>
 </body>
 </html>

@@ -23,28 +23,48 @@ const showTransection = ()=>{
    return JSON.parse(localStorage.getItem("historyOfTransection"))
 }
 
-
-const historyArr = showTransection() || [];
+let historyArr = showTransection() || [];
+const time = new Date().toLocaleTimeString();
+const date = new Date().toDateString();
 const transactionHistory = (method , amount)=>{
+    const bank = document.getElementById("bank").value;
     const newElm = document.createElement("div");
-    newElm.innerHTML = `<div class="border border-gray-200 p-2 rounded"> <div class="li-left flex justify-start items-center gap-4"> <img src="assets/money1.png" alt=""> <div> <h1>${method}</h1> <span>${amount}</span> </div> </div> </div>`;
+    newElm.innerHTML = `
+    <div>
+    <div class = "border border-gray-600 p-2 rounded-lg flex justify-center items-center gap-2 ">
+     <img src="assets/money1.png" alt="">
+     <p>${method} ${amount} from ${bank} to 01319556163 at ${time} on ${date}</p>
+    </div>
+    </div>
+    
+    `;
     transHistory.append(newElm);
     historyArr.push(newElm.innerText);
     localStorage.setItem("historyOfTransection", JSON.stringify(historyArr));
    
 }
-for(let arr of historyArr){
-const newElm = document.createElement("div");
-newElm.innerHTML = `<div class="border border-gray-200 p-2 rounded"> <div class="li-left flex justify-start items-center gap-4"> <img src="assets/money1.png" alt=""> <div><span>${arr}</span> </div> </div> </div>`;
-transHistory.append(newElm);
+
+  for(let arr of historyArr){
+    const newElm = document.createElement("div");
+    newElm.innerHTML = ` <div>
+    <div class = "border border-gray-600 p-2 rounded-lg flex justify-center items-center gap-2 ">
+     <img src="assets/money1.png" alt="">
+     <p>${arr}</p>
+    </div>
+    </div>`;
+    transHistory.append(newElm);
 }
 
-const showAddTotal = ()=>{
-    return JSON.parse(localStorage.getItem("addTotal"));
-}
 
 
-let addTotalAmount = showAddTotal() || 500;
+document.getElementById("clear-history").addEventListener("click" , ()=>{
+    historyArr = [];
+    console.log(historyArr);
+    localStorage.setItem("historyOfTransection",JSON.stringify(historyArr));
+    transHistory.innerHTML = "";
+})
+
+
 
 const addAmount = (amounts)=>{
     const getAmount = parseInt(amount.innerText);
@@ -52,9 +72,8 @@ const addAmount = (amounts)=>{
     amount.innerText = totalAmount ;
     amountToAdd.value = "";
     pin.value = "";
-    localStorage.setItem("addTotal", JSON.stringify(totalAmount));
 }
-amount.innerText = addTotalAmount;
+
 
 
 const outAmount = (amounts)=>{
@@ -68,18 +87,29 @@ const outAmount = (amounts)=>{
 
 
 
+const getLoaclTotal = ()=>{
+    return JSON.parse(localStorage.getItem("localTotal"));
+}
+let localAmount = getLoaclTotal() || 50000;
+
+const showLocalTotal = (amount)=>{
+    localAmount = amount.innerText ;
+   localStorage.setItem("localTotal", JSON.stringify(localAmount));
+}
+amount.innerText = localAmount ;
 
 
 
 addMoneyBtn.addEventListener("click",(e)=>{
     e.preventDefault();
-    const addMoney = "Add Money";
+    const addMoney = "Money added ";
    if(pin.value === "1234"){
     if(accountNumber.value.length === 11){
         if(amountToAdd.value > 0){
             const getAmountToAdd = parseInt(amountToAdd.value);
             addAmount(getAmountToAdd);
             transactionHistory(addMoney, getAmountToAdd);
+            showLocalTotal(amount);
             accountNumber.value = "";
         }else{
             alert("invalid amount to add");
@@ -106,6 +136,7 @@ cashOutBtn.addEventListener("click",(e)=>{
             const getAmountToWithdraw = parseInt(amountToWithdraw.value);
             outAmount(getAmountToWithdraw);
             transactionHistory(cashout , getAmountToWithdraw);
+            showLocalTotal(amount);
             accountNumber.value = "";
         }else{
             alert("insuficent amount");
